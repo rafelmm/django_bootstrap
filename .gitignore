@@ -1,0 +1,6 @@
+venv
+*.pyc
+*~
+django_bootstrap/db.sqlite3
+django_bootstrap/staticfiles/
+
