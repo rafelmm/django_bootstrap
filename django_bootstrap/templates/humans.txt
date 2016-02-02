@@ -1,0 +1,13 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+	Rafel Mormeneo  -- Developer -- @lefar
+
+# THANKS
+	Thank you for using this template
+
+# TECHNOLOGY COLOPHON
+	Django
+    HTML5, CSS3, Bootstrap
+    jQuery

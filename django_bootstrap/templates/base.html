@@ -1,0 +1,79 @@
+{% load staticfiles %}
+
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" >
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1" >
+		
+		<title>{% block head_title %}Django Bootstrap{% endblock %}</title>
+		
+		<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    	<!--[if lt IE 9]>
+      		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    
+	</head>
+	<body>
+		<form id="set_language_form" action="{% url 'set_language' %}" method="post">
+		{% csrf_token %}
+ 			<input name="next" type="hidden" value="/" />
+			<select id="set_language_select" name="language" style="display:none">
+				{% get_current_language as LANGUAGE_CODE %}
+				{% get_available_languages as LANGUAGES %}
+				{% get_language_info_list for LANGUAGES as languages %}
+				{% for language in languages %}
+					<option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected" {% endif %}>
+						{{ language.name_local|capfirst }} ({{ language.code }})
+					</option>
+				{% endfor %}
+			</select>
+		</form>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+			    	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+			        	<span class="sr-only">Toggle navigation</span>
+			        	<span class="icon-bar"></span>
+			        	<span class="icon-bar"></span>
+			        	<span class="icon-bar"></span>
+			      	</button>
+			      	<a class="navbar-brand" href="#">Django Bootstrap</a>
+			    </div> <!-- .navbar-header -->
+			    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+			      	<ul class="nav navbar-nav">
+			        	<li class="active"><a href="#">{% trans 'Page 1' %} <span class="sr-only">(current)</span></a></li>
+			        	<li><a href="#">{% trans 'Page 2' %}</a></li>
+			        </ul>
+			        <ul class="nav navbar-nav navbar-right">
+			        	<li class="dropdown">
+          					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans 'Language'%} <span class="caret"></span></a>
+          					<ul class="dropdown-menu">
+            					<li><a id="ca-lang" class="lang-li" href="#">{% trans 'Catalan' %}</a></li>
+            					<li><a id="es-lang" class="lang-li" href="#">{% trans 'Spanish' %}</a></li>
+            					<li><a id="en-lang" class="lang-li" href="#">{% trans 'English' %}</a></li>
+          					</ul>
+        				</li>
+			        </ul>
+			    </div>
+			</div> <!-- .container-fluid -->
+		</nav>
+		
+		<div class="container-fluid">
+			{% block content %} {% endblock %}
+		</div>
+		<script src="{% static 'js/jquery-1.12.0.js' %}"></script>
+		<script src="{% static 'js/bootstrap.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+		
+		{% block footer_javascript %}{% endblock %}
+	</body>
+</html>
